@@ -12,6 +12,7 @@ model.register = (firstName, lastname, email, password) => {
         })
         alert('Register success, please check your email!')
         view.setActiveScreen('loginScreen')
+        
     }).catch((e) => {
         alert(e.message)
         console.log(e)
@@ -30,6 +31,9 @@ model.login = (email, password) => {
                 // }
                 console.log(model.currentUser)
                 view.setActiveScreen('chatScreen')
+                // nếu chưa có document trong collection users thì thêm mới!
+                // model.createUserRecord(currentUser)
+
             } else {
                 alert('Vefify your email!')
             }

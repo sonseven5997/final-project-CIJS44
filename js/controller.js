@@ -26,14 +26,6 @@ controller.login = (loginInfo) => {
     }
 }
 
-// displayName: changeProfileSettingForm.displayName.value,
-//                     bio: changeProfileSettingForm.bio.value,
-//                     birthYear: changeProfileSettingForm.birthYear.value,
-// picture1,
-// picture2,
-// picture3,
-
-
 
 controller.changeProfileSetting = ({ displayName, bio, birthYear, picture1, picture2, picture3, }) => {
     view.setErrorMessage('display-name-error', !displayName ? 'Please input display name' : '')
@@ -60,17 +52,17 @@ controller.changeProfileSetting = ({ displayName, bio, birthYear, picture1, pict
         picture3 = utils.uploadPic(picture3[0])
     }
 
-    if (bio && displayName && birthYear && picture1 && picture2 && picture3) {
+    images = [picture1, picture2, picture3]
+    console.log(images)
+    if (bio && displayName && birthYear && images.length===3) {
         model.changeProfileSetting({
             displayName,
             bio,
             birthYear,
-            picture1,
-            picture2,
-            picture3,
+            images
         })
     } else {
-        console.log('aaaa')
+        console.log('bbbb')
     }
 }
 
