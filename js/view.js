@@ -58,9 +58,9 @@ view.setActiveScreen = (screenName) => {
                 }
             })
 
-            document.getElementById('new-conversation')
+            document.getElementById('my-profile')
                 .addEventListener('click', () => {
-                    view.setActiveScreen('createConversationScreen')
+                    view.setActiveScreen('changeProfileSettingScreen')
                 })
 
             const addUserForm = document.getElementById('add-user-form')
@@ -78,24 +78,29 @@ view.setActiveScreen = (screenName) => {
             model.loadConversations()
             model.listenConversationChange()
 
-            document.querySelector('#sendMessageForm input').addEventListener('click', () =>{
+            document.querySelector('#sendMessageForm input').addEventListener('click', () => {
                 view.hideNotify(model.currentConversation.id)
             })
 
             break
-        case 'createConversationScreen':
-            document.getElementById('app').innerHTML = components.createConversationScreen
+        case 'changeProfileSettingScreen':
+            document.getElementById('app').innerHTML = components.changeProfileSettingScreen
             document.getElementById('back-to-chat').addEventListener('click', () => {
                 view.backToChatScreen()
             })
-            const createConversationForm = document.getElementById('create-conversation-form')
-            createConversationForm.addEventListener('submit', (e) => {
+            const changeProfileSettingForm = document.getElementById('change-profile-setting-form')
+            changeProfileSettingForm.addEventListener('submit', (e) => {
                 e.preventDefault()
+
                 const data = {
-                    title: createConversationForm.title.value,
-                    friendEmail: createConversationForm.email.value
+                    displayName: changeProfileSettingForm.displayName.value,
+                    bio: changeProfileSettingForm.bio.value,
+                    birthYear: changeProfileSettingForm.birthYear.value,
+                    picture1: changeProfileSettingForm.picture1.files,
+                    picture2: changeProfileSettingForm.picture2.files,
+                    picture3: changeProfileSettingForm.picture3.files,
                 }
-                controller.createConversation(data)
+                controller.changeProfileSetting(data)
             })
             break
     }
@@ -145,7 +150,7 @@ view.showCurrentConversation = () => {
 }
 
 view.showConversation = () => {
-    document.querySelector('.list-conversations').innerHTML = '' //20200711 - Duong - refresh list after sign out and sign back in
+    document.querySelector('.list-matches').innerHTML = '' //20200711 - Duong - refresh list after sign out and sign back in
     for (oneConversation of model.conversations) {
         view.addConversation(oneConversation)
     }
@@ -165,25 +170,6 @@ view.addConversation = (conversation) => {
         <div class ="conversation-num-users">${conversation.users.length} users</div>
         <div class ="conversation-notify"></div>
         `
-    
-    const mediaQuery = window.matchMedia('screen and (max-width: 768px')
-    if (mediaQuery.matches) {
-        conversationWrapper.firstElementChild
-        .innerHTML = conversation.title.charAt(0)
-        document.getElementById('new-conversation').innerText = '+'
-    }
-
-    mediaQuery.addListener((mediaMatch) => {
-        if(mediaMatch.matches){
-            conversationWrapper.firstElementChild
-            .innerHTML = conversation.title.charAt(0)
-            document.getElementById('new-conversation').innerText = '+'
-        } else{
-            conversationWrapper.firstElementChild.innerHTML = conversation.title
-            document.getElementById('new-conversation').innerText = '+ New conversation'
-        }
-    })
-
     conversationWrapper.addEventListener('click', () => {
         document.querySelector('.current').classList.remove('current')
         conversationWrapper.classList.add('current')
@@ -192,7 +178,7 @@ view.addConversation = (conversation) => {
         // conversationWrapper.lastElementChild.style = 'display: none'
     })
 
-    document.querySelector('.list-conversations').appendChild(conversationWrapper)
+    document.querySelector('.list-matches').appendChild(conversationWrapper)
 }
 
 view.backToChatScreen = () => {
@@ -214,9 +200,9 @@ view.backToChatScreen = () => {
         }
     })
 
-    document.getElementById('new-conversation')
+    document.getElementById('my-profile')
         .addEventListener('click', () => {
-            view.setActiveScreen('createConversationScreen')
+            view.setActiveScreen('changeProfileSettingScreen')
         })
     view.showConversation()
     view.showCurrentConversation()
@@ -230,7 +216,7 @@ view.backToChatScreen = () => {
         addUserForm.email.value = ''
     })
 
-    document.querySelector('#sendMessageForm input').addEventListener('click', () =>{
+    document.querySelector('#sendMessageForm input').addEventListener('click', () => {
         view.hideNotify(model.currentConversation.id)
     })
 }

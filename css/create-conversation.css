@@ -1,16 +1,16 @@
-.create-conversation-wrapper{
+.my-profile-setting-wrapper{
     height:100vh;
 }
 
-.create-conversation-wrapper .main{
+.my-profile-setting-wrapper .main{
     padding: 50px 20%;   
 }
 
-/* .create-conversation-wrapper .main h3 {
+/* .my-profile-setting-wrapper .main h3 {
     margin-bottom: 1rem;
 }
 
-.create-conversation-wrapper .main .input-wraper {
+.my-profile-setting-wrapper .main .input-wraper {
     margin-bottom: 1rem;
 } */
 

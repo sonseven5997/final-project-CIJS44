@@ -6,7 +6,7 @@ components.welcomeScreen = `
 components.registerScreen = `
 <div class="register-container">
             <div class="register-form">
-                <div class="title">Mindx Chat</div>
+                <div class="title">TindX</div>
                 <form id="form-register">
                     <div class="name-wrapper">
                         <div class="input-wrapper">
@@ -41,7 +41,7 @@ components.registerScreen = `
 components.loginScreen = `
 <div class="login-container">
             <div class="login-form">
-                <div class="title">Mindx Chat</div>
+                <div class="title">TindX</div>
                 <form id="form-login">
                     
                     <div class="input-wrapper">
@@ -64,15 +64,43 @@ components.loginScreen = `
 
 components.chatScreen = `
         <div class="header">
-                MindX chat
+        TindX - Say NO to fwb and ons!
         </div>    
         <div class="chat-container">
             <div class="aside-left">
-                <div class = "new-conversation">
-                  <button class="btn" id = "new-conversation">+ New conversation</button>
+                <div class = "my-profile">
+                  <button class="btn" id = "my-profile">My Profile</button>
                 </div>
-                <div class="list-conversations">                                     
+
+                <nav>
+                    <div class="nav nav-pills d-flex justify-content-center border-0" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-matches-tab" data-toggle="tab" href="#nav-matches" role="tab" aria-controls="nav-matches" aria-selected="true">Matches</a>
+                        <a class="nav-item nav-link" id="nav-chats-tab" data-toggle="tab" href="#nav-chats" role="tab" aria-controls="nav-chats" aria-selected="false">Chats</a>
+                    
+                    </div>
+                </nav>
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-matches" role="tabpanel" aria-labelledby="nav-matches-tab">
+                <div class="list-matches">
+                
+                    <ul>
+                    <li> 1</li>
+                    <li> 1</li>
+                    <li> 1</li>
+                    <li> 1</li>
+                    </ul>
+
                 </div>
+                </div>
+                <div class="tab-pane fade" id="nav-chats" role="tabpanel" aria-labelledby="nav-chats-tab">to do</div>
+              
+              </div>
+
+
+
+
+
+
             </div>
             <div class="main">
                 <div class="conversation-detail">
@@ -108,26 +136,51 @@ components.chatScreen = `
 `
 
 
-components.createConversationScreen = `
-<div class = "create-conversation-wrapper">
+components.changeProfileSettingScreen = `
+<div class = "my-profile-setting-wrapper">
     <div class="header">
-            MindX chat
+    TindX - Say NO to fwb and ons!
     </div>    
     <div class="main">
-        <h3 class="mb-1rem">Create a new conversation</h3>
-        <form id="create-conversation-form">
+        <h3 class="mb-1rem">My profile setting</h3>
+        <form id="change-profile-setting-form">
             
             <div class="input-wrapper mb-1rem">
-                <input type="text" name="title" placeholder="Conversation name">
-                <div class="error" id="conversation-name-error"></div>
+                <input type="text" name="displayName" placeholder="Display Name">
+                <div class="error" id="display-name-error"></div>
             </div>
+
             <div class="input-wrapper mb-1rem">
-                <input type="text" name="email" placeholder="Friend email">
-                <div class="error" id="conversation-email-error"></div>
+                <textarea  type="text" maxlength="500" name="bio" placeholder="Bio"></textarea>
+                <div class="error" id="bio-error"></div>
             </div>
+
+            <div class="input-wrapper mb-1rem">
+                <input type="number" min="1900" name="birthYear" placeholder="Birth Year">
+                <div class="error" id="birth-year-error"></div>
+            </div>
+
+
+            <div class="input-wrapper mb-1rem">
+                <input type="file" name="picture1" accept="image/*" placeholder="Picture 1">
+                <div class="error" id="picture1-error"></div>
+            </div>
+
+            <div class="input-wrapper mb-1rem">
+                <input type="file" name="picture2" accept="image/*" placeholder="Picture 2">
+                <div class="error" id="picture2-error"></div>
+            </div>
+
+            <div class="input-wrapper mb-1rem">
+                <input type="file" name="picture3" accept="image/*" placeholder="Picture 3">
+                <div class="error" id="picture3-error"></div>
+            </div>
+           
             
+
+
             <div class="button-wrapper">
-                <button class = "btn" type="submit">Create</button>
+                <button class = "btn" type="submit">Save</button>
                 <button type="button" id='back-to-chat'>Cancel</button>
             </div>
         </form>

@@ -83,8 +83,7 @@
 .chat-container .aside-left {
   border-right: 1px solid #dbdbdb;
   font-size: 14px;
-  width: 15%;
-  height: 100%;
+  width: 20%;
 }
 
 .chat-container .conversation {
@@ -96,7 +95,7 @@
   background: #dbdbdb;
 }
 
-.chat-container .aside-left .new-conversation {
+.chat-container .aside-left .my-profile {
   height: 64px;
   border-bottom: 1px solid #dbdbdb;
   line-height: 64px;
@@ -113,8 +112,6 @@
 .chat-container .email {
   padding: 5px 10px;
   padding-bottom: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 #add-user-form {
@@ -132,36 +129,6 @@
     display: none;
 }
 
-.chat-container .list-conversations .conversation {
+.chat-container .list-matches .conversation {
   position: relative;
-}
-
-@media screen and (max-width: 768px) {
-  .chat-container .aside-right {
-    display: none;
-  }
-
-  .chat-container .aside-left .conversation-num-users{
-    display: none;
-  }
-
-  .chat-container .aside-left .conversation {
-    border-radius: 50%;
-    width: 64px;
-    height: 64px;
-    line-height: 64px;
-    padding: 0;
-    text-align: center;
-    text-transform: uppercase;
-    border: 1px solid #dbdbdb;
-    margin-bottom: 10px;
-  }
-
-  .chat-container .aside-left .conversation-notify {
-    top: 38%;
-    right: 5px;
-  }
-  .chat-container .aside-left {
-    width: 70px;
-  }
 }

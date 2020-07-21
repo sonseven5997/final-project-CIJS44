@@ -23,11 +23,11 @@ model.login = (email, password) => {
         .then((user) => {
             console.log(user)
             if (user.user.emailVerified) {
-                // model.currentUser = user.user
-                model.currentUser = {
-                    displayName: user.user.displayName,
-                    email: user.user.email
-                }
+                model.currentUser = user.user
+                // model.currentUser = {
+                //     displayName: user.user.displayName,
+                //     email: user.user.email
+                // }
                 console.log(model.currentUser)
                 view.setActiveScreen('chatScreen')
             } else {
@@ -90,7 +90,7 @@ model.listenConversationChange = () => {
                     console.log(oneChangeData)
 
                     if (oneChangeData.id === model.currentConversation.id) {
-                        
+
                         if (model.currentConversation.users.length === oneChangeData.users.length) {
                             view.addMessage(oneChangeData.messages[oneChangeData.messages.length - 1])
                         } else {
@@ -105,7 +105,7 @@ model.listenConversationChange = () => {
                         const element = model.conversations[i]
                         if (element.id === oneChangeData.id) {
                             model.conversations[i] = oneChangeData
-                            if (oneChangeData.messages[oneChangeData.messages.length-1].owner !== model.currentUser.email){
+                            if (oneChangeData.messages[oneChangeData.messages.length - 1].owner !== model.currentUser.email) {
                                 view.showNotify(oneChangeData.id)
                             }
 
@@ -138,9 +138,25 @@ model.changeCurrentConversation = (conversationId) => {
     view.showCurrentConversation()
 }
 
-model.createConversation = (conversation) => {
+model.changeProfileSetting = (profileSetting) => {
 
-    firebase.firestore().collection(model.collectionName).add(conversation)
+    const docIdUpdate = model.currentUser.uid
+    console.log(docIdUpdate)
+    console.log(profileSetting)
+
+    firebase.firestore().collection('users')
+    .where('uid', '==', model.currentUser.uid)
+    .limit(1)
+    .get()
+    .then(
+        (querySnapshot) => {
+            var user = querySnapshot.docs[0];
+            user.ref.update(profileSetting)
+        }
+    )
+    // update(profileSetting).then(res => {
+    //     alert('updated!')
+    // })
     view.backToChatScreen()
 
 }

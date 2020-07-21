@@ -11,6 +11,13 @@
   border-radius: 5px;
 }
 
+.input-wrapper textarea {
+  width: 100%;
+  padding: 10px 13px;
+  border: 1px solid #dbdbdb;
+  border-radius: 5px;
+}
+
 
 .cursor-pointer {
   cursor: pointer;
