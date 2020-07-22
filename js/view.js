@@ -150,7 +150,7 @@ view.showCurrentConversation = () => {
 }
 
 view.showConversation = () => {
-    document.querySelector('.list-matches').innerHTML = '' //20200711 - Duong - refresh list after sign out and sign back in
+    document.querySelector('.list-conversations').innerHTML = '' //20200711 - Duong - refresh list after sign out and sign back in
     for (oneConversation of model.conversations) {
         view.addConversation(oneConversation)
     }
@@ -178,7 +178,7 @@ view.addConversation = (conversation) => {
         // conversationWrapper.lastElementChild.style = 'display: none'
     })
 
-    document.querySelector('.list-matches').appendChild(conversationWrapper)
+    document.querySelector('.list-conversations').appendChild(conversationWrapper)
 }
 
 view.backToChatScreen = () => {
@@ -246,3 +246,36 @@ view.showNotify = (conversationId) => {
 view.hideNotify = (conversationId) => {
     document.getElementById(conversationId).lastElementChild.style = 'display :none'
 }
+
+// ======================================================
+
+// view.showMatches = () => {
+//     document.querySelector('.list-matches').innerHTML = '' // refresh list after sign out and sign back in
+//     for (oneMatch of model.matches) {
+//         view.addMatch(oneMatch)
+//     }
+
+
+// }
+
+// view.addMatch = (match) => {
+//     const matchWrapper = document.createElement('div')
+//     matchWrapper.classList.add('match')
+//     matchWrapper.id = match.id
+//     if (match.id === model.currentMatch.id) {
+//         matchWrapper.classList.add('current')
+//     }
+//     matchWrapper.innerHTML = `
+//         <img src='https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png' />
+//         <div class ="match-title">${match.id}</div>
+//         `
+//     matchWrapper.addEventListener('click', () => {
+//         document.querySelector('.current').classList.remove('current')
+//         matchWrapper.classList.add('current')
+//         model.changeCurrentMatch(match.id)
+     
+//         // matchWrapper.lastElementChild.style = 'display: none'
+//     })
+
+//     document.querySelector('.list-matches').appendChild(matchWrapper)
+// }

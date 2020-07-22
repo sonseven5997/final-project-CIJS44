@@ -83,7 +83,7 @@
 .chat-container .aside-left {
   border-right: 1px solid #dbdbdb;
   font-size: 14px;
-  width: 20%;
+  width: 40%;
 }
 
 .chat-container .conversation {
@@ -129,6 +129,14 @@
     display: none;
 }
 
-.chat-container .list-matches .conversation {
+.chat-container .list-conversations .conversation {
   position: relative;
+}
+
+.chat-container .list-matches .matches {
+  position: relative;
+}
+
+.bottom-0{
+  bottom: 0;
 }

@@ -12,7 +12,7 @@ model.register = (firstName, lastname, email, password) => {
         })
         alert('Register success, please check your email!')
         view.setActiveScreen('loginScreen')
-        
+
     }).catch((e) => {
         alert(e.message)
         console.log(e)
@@ -32,7 +32,7 @@ model.login = (email, password) => {
                 console.log(model.currentUser)
                 view.setActiveScreen('chatScreen')
                 // nếu chưa có document trong collection users thì thêm mới!
-                // model.createUserRecord(currentUser)
+                model.createUserRecord(model.currentUser)
 
             } else {
                 alert('Vefify your email!')
@@ -149,15 +149,15 @@ model.changeProfileSetting = (profileSetting) => {
     console.log(profileSetting)
 
     firebase.firestore().collection('users')
-    .where('uid', '==', model.currentUser.uid)
-    .limit(1)
-    .get()
-    .then(
-        (querySnapshot) => {
-            var user = querySnapshot.docs[0];
-            user.ref.update(profileSetting)
-        }
-    )
+        .where('uid', '==', model.currentUser.uid)
+        .limit(1)
+        .get()
+        .then(
+            (querySnapshot) => {
+                var user = querySnapshot.docs[0];
+                user.ref.update(profileSetting)
+            }
+        )
     // update(profileSetting).then(res => {
     //     alert('updated!')
     // })
@@ -173,4 +173,24 @@ model.addUser = (email) => {
     }
     firebase.firestore().collection(model.collectionName)
         .doc(model.currentConversation.id).update(dataToUpdate)
+}
+
+
+
+model.createUserRecord = (currentUser) => {
+    isExist = firebase.firestore().collection('users').where('uid', '==', model.currentUser.uid).limit(1).get().then(
+        (querySnapshot) => {
+            if (querySnapshot.docs.length === 1) {
+                console.log("duong: user already exist in collection users!")
+            } else {
+                const dataToCreate = {
+                    uid: model.currentUser.uid,
+                }
+                firebase.firestore().collection('users').add(dataToCreate).then(res => {
+                    alert('added!')
+                })
+            }
+        }
+    )
+
 }

@@ -72,27 +72,50 @@ components.chatScreen = `
                   <button class="btn" id = "my-profile">My Profile</button>
                 </div>
 
-                <nav>
+                <nav class="p-2">
                     <div class="nav nav-pills d-flex justify-content-center border-0" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-matches-tab" data-toggle="tab" href="#nav-matches" role="tab" aria-controls="nav-matches" aria-selected="true">Matches</a>
+                        <a class="nav-item nav-link active " id="nav-matches-tab" data-toggle="tab" href="#nav-matches" role="tab" aria-controls="nav-matches" aria-selected="true">Matches</a>
                         <a class="nav-item nav-link" id="nav-chats-tab" data-toggle="tab" href="#nav-chats" role="tab" aria-controls="nav-chats" aria-selected="false">Chats</a>
                     
                     </div>
                 </nav>
               <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-matches" role="tabpanel" aria-labelledby="nav-matches-tab">
-                <div class="list-matches">
+                <div class="list-matches d-flex flex-wrap justify-content-even">
                 
-                    <ul>
-                    <li> 1</li>
-                    <li> 1</li>
-                    <li> 1</li>
-                    <li> 1</li>
-                    </ul>
+                 
+                    <div class="matches w-25 p-2">
+                        <div class="card bg-dark text-white ">
+                          <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" class="card-img .img-thumbnail " alt="...">
+                          <div class="card-img-overlay">
+                            <h5 class="card-title position-absolute bottom-0">user 1</h5>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="matches w-25 p-2">
+                        <div class="card bg-dark text-white ">
+                          <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" class="card-img .img-thumbnail " alt="...">
+                          <div class="card-img-overlay">
+                            <h5 class="card-title position-absolute bottom-0 ">Card title</h5>
+                            
+                          </div>
+                        </div>
+                    </div>
+                 
+                    
 
                 </div>
                 </div>
-                <div class="tab-pane fade" id="nav-chats" role="tabpanel" aria-labelledby="nav-chats-tab">to do</div>
+                <div class="tab-pane fade" id="nav-chats" role="tabpanel" aria-labelledby="nav-chats-tab">
+                
+                <div class="list-conversations">
+                
+
+                </div>
+                
+                
+                
+                </div>
               
               </div>
 
@@ -104,6 +127,7 @@ components.chatScreen = `
             </div>
             <div class="main">
                 <div class="conversation-detail">
+                
                     <div class="conversation-title">First conversation</div>
                     <div class="list-message">
 
