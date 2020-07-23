@@ -3,6 +3,7 @@ model.currentUser = undefined
 model.collectionName = 'conversations'
 model.currentConversation = undefined
 model.conversations = undefined
+model.currentFriend = undefined
 
 model.register = (firstName, lastname, email, password) => {
     firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
@@ -31,8 +32,18 @@ model.login = (email, password) => {
                 // }
                 console.log(model.currentUser)
                 view.setActiveScreen('chatScreen')
+
                 // nếu chưa có document trong collection users thì thêm mới!
-                model.createUserRecord(model.currentUser)
+                firebase.firestore().collection('users').where('uid', '==', model.currentUser.uid).limit(1).get().then(
+                    (querySnapshot) => {
+                        if (querySnapshot.docs.length === 1) {
+                            console.log("duong: user already exist in collection users!")
+                        } else {
+                            model.createUserRecord(model.currentUser)
+                            view.setActiveScreen('changeProfileSettingScreen') //log in lần đầu thì chuyển đến sửa profile ngay
+                        }
+                    }
+                )
 
             } else {
                 alert('Vefify your email!')
@@ -52,6 +63,8 @@ model.loadConversations = () => {
 
             if (data.length > 0) {
                 model.currentConversation = data[0]
+                model.currentFriend = model.currentConversation.users
+                .filter(item => item !== model.currentUser.email)[0]
                 view.showCurrentConversation()
             }
 
@@ -139,6 +152,10 @@ model.changeCurrentConversation = (conversationId) => {
     model.currentConversation = model.conversations
         .filter(item => item.id === conversationId)[0]
     console.log(model.currentConversation)
+
+    model.currentFriend = model.currentConversation.users
+        .filter(item => item !== model.currentUser.email)[0]   //khi click vào 1 conversation, update title thành email của người bạn chat
+    console.log(model.currentFriend)
     view.showCurrentConversation()
 }
 
@@ -178,19 +195,11 @@ model.addUser = (email) => {
 
 
 model.createUserRecord = (currentUser) => {
-    isExist = firebase.firestore().collection('users').where('uid', '==', model.currentUser.uid).limit(1).get().then(
-        (querySnapshot) => {
-            if (querySnapshot.docs.length === 1) {
-                console.log("duong: user already exist in collection users!")
-            } else {
-                const dataToCreate = {
-                    uid: model.currentUser.uid,
-                }
-                firebase.firestore().collection('users').add(dataToCreate).then(res => {
-                    alert('added!')
-                })
-            }
-        }
-    )
+    const dataToCreate = {
+        uid: currentUser.uid,
+    }
+    firebase.firestore().collection('users').add(dataToCreate).then(res => {
+        // alert('added!')
+    })
 
 }

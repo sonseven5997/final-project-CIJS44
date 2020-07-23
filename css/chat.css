@@ -4,7 +4,6 @@
   display: flex;
 }
 
-
 .chat-container .main {
   height: 100%;
   flex-grow: 1;
@@ -15,6 +14,7 @@
   display: flex;
   flex-direction: column;
 }
+
 .main .conversation-title {
   height: 64px;
   text-align: center;
@@ -58,7 +58,6 @@
   color: #333;
   word-break: break-word;
   width: max-content;
-
 }
 
 .chat-container .list-message .message.their .owner {
@@ -83,7 +82,7 @@
 .chat-container .aside-left {
   border-right: 1px solid #dbdbdb;
   font-size: 14px;
-  width: 40%;
+  width: 30%;
 }
 
 .chat-container .conversation {
@@ -103,11 +102,6 @@
 }
 
 
-.chat-container .aside-right {
-  border-left: 1px solid #dbdbdb;
-  font-size: 14px;
-  width: 15%;
-}
 
 .chat-container .email {
   padding: 5px 10px;
@@ -120,13 +114,13 @@
 
 .conversation-notify {
   width: 15px;
-    height: 15px;
-    background: #1c75f2;
-    border-radius: 50%;
-    position: absolute;
-    top: 30%;
-    right: 20px;
-    display: none;
+  height: 15px;
+  background: #1c75f2;
+  border-radius: 50%;
+  position: absolute;
+  top: 30%;
+  right: 20px;
+  display: none;
 }
 
 .chat-container .list-conversations .conversation {
@@ -137,6 +131,29 @@
   position: relative;
 }
 
-.bottom-0{
+.bottom-0 {
   bottom: 0;
 }
+
+.card {
+  border: 0px!important;
+}
+
+.matches {
+  width: 33%;
+}
+
+.card-title {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 700;
+  font-size: 1rem;
+  font-family: ProximaNova, sans-serif;
+  line-height: 1.3125;
+}
+/* 
+.my-profile-setting-wrapper .main {
+  width: 30%;
+} */

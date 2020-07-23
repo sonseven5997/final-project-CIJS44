@@ -84,19 +84,46 @@ components.chatScreen = `
                 <div class="list-matches d-flex flex-wrap justify-content-even">
                 
                  
-                    <div class="matches w-25 p-2">
+                    <div class="matches p-2">
                         <div class="card bg-dark text-white ">
-                          <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" class="card-img .img-thumbnail " alt="...">
+                          <img src="../images/320x400_pic1.jpg" class="card-img" alt="...">
                           <div class="card-img-overlay">
-                            <h5 class="card-title position-absolute bottom-0">user 1</h5>
+                            <div class="card-title position-absolute bottom-0">Giang</div>
                           </div>
                         </div>
                     </div>
-                    <div class="matches w-25 p-2">
+                    <div class="matches p-2">
                         <div class="card bg-dark text-white ">
-                          <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" class="card-img .img-thumbnail " alt="...">
+                          <img src="../images/320x400_pic2.jpg" class="card-img" alt="...">
                           <div class="card-img-overlay">
-                            <h5 class="card-title position-absolute bottom-0 ">Card title</h5>
+                            <div class="card-title position-absolute bottom-0 ">Huong</div>
+                            
+                          </div>
+                        </div>
+                    </div>
+                    <div class="matches p-2">
+                        <div class="card bg-dark text-white ">
+                          <img src="../images/320x400_pic3.jpg" class="card-img" alt="...">
+                          <div class="card-img-overlay">
+                            <div class="card-title position-absolute bottom-0 ">Thao</div>
+                            
+                          </div>
+                        </div>
+                    </div>
+                    <div class="matches w-33 p-2">
+                        <div class="card bg-dark text-white ">
+                          <img src="../images/320x400_pic4.jpg" class="card-img" alt="...">
+                          <div class="card-img-overlay">
+                            <div class="card-title position-absolute bottom-0 ">Anh</div>
+                            
+                          </div>
+                        </div>
+                    </div>
+                    <div class="matches w-33 p-2">
+                        <div class="card bg-dark text-white ">
+                          <img src="../images/320x400_pic5.jpg" class="card-img" alt="...">
+                          <div class="card-img-overlay">
+                            <div class="card-title position-absolute bottom-0 ">Linh</div>
                             
                           </div>
                         </div>
@@ -119,16 +146,11 @@ components.chatScreen = `
               
               </div>
 
-
-
-
-
-
             </div>
             <div class="main">
                 <div class="conversation-detail">
                 
-                    <div class="conversation-title">First conversation</div>
+                    <div class="conversation-title"></div>
                     <div class="list-message">
 
                     </div>
@@ -138,22 +160,7 @@ components.chatScreen = `
                     </form>
                 </div>
             </div>
-            <div class="aside-right">
-                <div class="list-users">
-
-                </div>
-                <form id="add-user-form">
-                    
-                    <div class="input-wrapper mb-1rem">
-                        <input type="text" name="email" placeholder="Email">
-                        <div class="error" id="add-email-error"></div>
-                    </div>
-                    <div class="button-wrapper">
-                        <button class = "btn" type="submit">Thêm</button>
-                    </div>
-                </form>
-                
-            </div>    
+           
                 
             </div>
         </div>
@@ -165,49 +172,85 @@ components.changeProfileSettingScreen = `
     <div class="header">
     TindX - Say NO to fwb and ons!
     </div>    
-    <div class="main">
-        <h3 class="mb-1rem">My profile setting</h3>
-        <form id="change-profile-setting-form">
+    <div class="profile-container d-flex p-5 justify-content-around">
+        <div class="main">
+            <h3 class="mb-1rem">My profile setting</h3>
+            <form id="change-profile-setting-form">
+                
+                <div class="input-wrapper mb-1rem">
+                    <input type="text" name="displayName" placeholder="Display Name">
+                    <div class="error" id="display-name-error"></div>
+                </div>
+
+                <div class="input-wrapper mb-1rem">
+                    <textarea  type="text" maxlength="500" name="bio" placeholder="Bio"></textarea>
+                    <div class="error" id="bio-error"></div>
+                </div>
+
+                <div class="input-wrapper mb-1rem">
+                    <input type="number" min="1900" name="birthYear" placeholder="Birth Year">
+                    <div class="error" id="birth-year-error"></div>
+                </div>
+
+
+                <div class="input-wrapper mb-1rem">
+                    <input type="file" name="picture1" accept="image/*" placeholder="Picture 1">
+                    <div class="error" id="picture1-error"></div>
+                </div>
+
+                <div class="input-wrapper mb-1rem">
+                    <input type="file" name="picture2" accept="image/*" placeholder="Picture 2">
+                    <div class="error" id="picture2-error"></div>
+                </div>
+
+                <div class="input-wrapper mb-1rem">
+                    <input type="file" name="picture3" accept="image/*" placeholder="Picture 3">
+                    <div class="error" id="picture3-error"></div>
+                </div>
             
-            <div class="input-wrapper mb-1rem">
-                <input type="text" name="displayName" placeholder="Display Name">
-                <div class="error" id="display-name-error"></div>
+                
+                <div class="button-wrapper">
+                    <button class = "btn" type="submit">Save</button>
+                    <button type="button" id='back-to-chat'>Cancel</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="right">
+            <div id="carouselExampleIndicators" class="carousel" data-interval="false">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                    <img class="d-block " src="../images/320x400_pic1.jpg" alt="First slide">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Thanh</h5>
+                        <p>Hello test bio 1</p>
+                    </div>
+                    </div>
+                    <div class="carousel-item">
+                    <img class="d-block " src="../images/320x400_pic2.jpg" alt="Second slide">
+                    
+                    </div>
+                    <div class="carousel-item">
+                    <img class="d-block " src="../images/320x400_pic3.jpg" alt="Third slide">
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
 
-            <div class="input-wrapper mb-1rem">
-                <textarea  type="text" maxlength="500" name="bio" placeholder="Bio"></textarea>
-                <div class="error" id="bio-error"></div>
-            </div>
 
-            <div class="input-wrapper mb-1rem">
-                <input type="number" min="1900" name="birthYear" placeholder="Birth Year">
-                <div class="error" id="birth-year-error"></div>
-            </div>
-
-
-            <div class="input-wrapper mb-1rem">
-                <input type="file" name="picture1" accept="image/*" placeholder="Picture 1">
-                <div class="error" id="picture1-error"></div>
-            </div>
-
-            <div class="input-wrapper mb-1rem">
-                <input type="file" name="picture2" accept="image/*" placeholder="Picture 2">
-                <div class="error" id="picture2-error"></div>
-            </div>
-
-            <div class="input-wrapper mb-1rem">
-                <input type="file" name="picture3" accept="image/*" placeholder="Picture 3">
-                <div class="error" id="picture3-error"></div>
-            </div>
-           
-            
-
-
-            <div class="button-wrapper">
-                <button class = "btn" type="submit">Save</button>
-                <button type="button" id='back-to-chat'>Cancel</button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 `

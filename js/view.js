@@ -63,18 +63,6 @@ view.setActiveScreen = (screenName) => {
                     view.setActiveScreen('changeProfileSettingScreen')
                 })
 
-            const addUserForm = document.getElementById('add-user-form')
-            addUserForm.addEventListener('submit', (e) => {
-                e.preventDefault()
-                // if (addUserForm.email.value.trim()) {
-                //     controller.addUser(addUserForm.email.value.trim())
-                // }
-                controller.addUser(addUserForm.email.value)
-                addUserForm.email.value = ''
-            })
-
-
-
             model.loadConversations()
             model.listenConversationChange()
 
@@ -143,10 +131,11 @@ view.showCurrentConversation = () => {
     }
     // console.log('duong')
     // console.log(model.currentConversation)
-    document.querySelector('.main .conversation-title')
-        .innerHTML = model.currentConversation.title
 
-    view.showCurrentConversationUsers(model.currentConversation)
+
+    document.querySelector('.main .conversation-title')
+        .innerHTML = model.currentFriend // hiện email bạn chat
+
 }
 
 view.showConversation = () => {
@@ -165,6 +154,9 @@ view.addConversation = (conversation) => {
     if (conversation.id === model.currentConversation.id) {
         conversationWrapper.classList.add('current')
     }
+
+    
+
     conversationWrapper.innerHTML = `
         <div class ="conversation-title">${conversation.title}</div>
         <div class ="conversation-num-users">${conversation.users.length} users</div>
@@ -207,14 +199,7 @@ view.backToChatScreen = () => {
     view.showConversation()
     view.showCurrentConversation()
     const addUserForm = document.getElementById('add-user-form')
-    addUserForm.addEventListener('submit', (e) => {
-        e.preventDefault()
-        // if (addUserForm.email.value.trim()) {
-        //     controller.addUser(addUserForm.email.value.trim())
-        // }
-        controller.addUser(addUserForm.email.value)
-        addUserForm.email.value = ''
-    })
+    
 
     document.querySelector('#sendMessageForm input').addEventListener('click', () => {
         view.hideNotify(model.currentConversation.id)
@@ -222,22 +207,9 @@ view.backToChatScreen = () => {
 }
 
 
-view.showCurrentConversationUsers = (users) => {
-    document.querySelector('.list-users').innerHTML = ''
-    for (oneUser of model.currentConversation.users) {
-        view.addUser(oneUser)
-    }
-}
 
-view.addUser = (user) => {
-    const userWrapper = document.createElement('div')
 
-    userWrapper.innerHTML = `
-        <p class ="email">${user}</p>
-        
-    `
-    document.querySelector('.list-users').appendChild(userWrapper)
-}
+
 
 view.showNotify = (conversationId) => {
     document.getElementById(conversationId).lastElementChild.style = 'display :block'
