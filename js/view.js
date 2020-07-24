@@ -64,8 +64,10 @@ view.setActiveScreen = (screenName) => {
                 })
 
             model.loadConversations()
+            view.showCurrentConversation()
             model.listenConversationChange()
-
+            model.listenUserChange()
+            model.loadMatches()
             document.querySelector('#sendMessageForm input').addEventListener('click', () => {
                 view.hideNotify(model.currentConversation.id)
             })
@@ -73,10 +75,15 @@ view.setActiveScreen = (screenName) => {
             break
         case 'changeProfileSettingScreen':
             document.getElementById('app').innerHTML = components.changeProfileSettingScreen
+
             document.getElementById('back-to-chat').addEventListener('click', () => {
                 view.backToChatScreen()
             })
+
             const changeProfileSettingForm = document.getElementById('change-profile-setting-form')
+
+            view.showCurrentUserProfile()
+
             changeProfileSettingForm.addEventListener('submit', (e) => {
                 e.preventDefault()
 
@@ -84,13 +91,35 @@ view.setActiveScreen = (screenName) => {
                     displayName: changeProfileSettingForm.displayName.value,
                     bio: changeProfileSettingForm.bio.value,
                     birthYear: changeProfileSettingForm.birthYear.value,
-                    picture1: changeProfileSettingForm.picture1.files,
-                    picture2: changeProfileSettingForm.picture2.files,
-                    picture3: changeProfileSettingForm.picture3.files,
+                    picture1: changeProfileSettingForm.picture1.files[0], // nếu lưu thì sẽ đè lên ảnh cũ. chưa xóa ảnh cũ TODO!!
+                    picture2: changeProfileSettingForm.picture2.files[0],
+                    picture3: changeProfileSettingForm.picture3.files[0],
                 }
                 controller.changeProfileSetting(data)
             })
             break
+        case 'swipeScreen':
+            document.getElementById('app').innerHTML = components.swipeScreen
+
+
+            document.getElementById('my-profile')
+                .addEventListener('click', () => {
+                    view.setActiveScreen('changeProfileSettingScreen')
+                })
+                console.log(model.currentUser)
+            model.loadConversations()
+            model.loadMatches()
+            // model.listenConversationChange()
+            // model.listenUserChange()
+
+
+            break
+
+
+
+
+
+
     }
 }
 
@@ -134,7 +163,7 @@ view.showCurrentConversation = () => {
 
 
     document.querySelector('.main .conversation-title')
-        .innerHTML = model.currentFriend // hiện email bạn chat
+        .innerHTML = model.currentChatFriend // hiện email bạn chat
 
 }
 
@@ -155,7 +184,7 @@ view.addConversation = (conversation) => {
         conversationWrapper.classList.add('current')
     }
 
-    
+
 
     conversationWrapper.innerHTML = `
         <div class ="conversation-title">${conversation.title}</div>
@@ -163,7 +192,7 @@ view.addConversation = (conversation) => {
         <div class ="conversation-notify"></div>
         `
     conversationWrapper.addEventListener('click', () => {
-        document.querySelector('.current').classList.remove('current')
+        document.querySelector('.conversation.current').classList.remove('current')
         conversationWrapper.classList.add('current')
         model.changeCurrentConversation(conversation.id)
         view.hideNotify(conversation.id)
@@ -199,17 +228,16 @@ view.backToChatScreen = () => {
     view.showConversation()
     view.showCurrentConversation()
     const addUserForm = document.getElementById('add-user-form')
-    
+
 
     document.querySelector('#sendMessageForm input').addEventListener('click', () => {
         view.hideNotify(model.currentConversation.id)
     })
+    model.loadMatches()
+    model.loadConversations()
+    model.listenConversationChange()
+
 }
-
-
-
-
-
 
 view.showNotify = (conversationId) => {
     document.getElementById(conversationId).lastElementChild.style = 'display :block'
@@ -219,35 +247,76 @@ view.hideNotify = (conversationId) => {
     document.getElementById(conversationId).lastElementChild.style = 'display :none'
 }
 
+
+
+view.showCurrentUserProfile = () => {
+    const changeProfileSettingForm = document.getElementById('change-profile-setting-form')
+    console.log("dddd");
+    console.log(model.currentUser)
+    changeProfileSettingForm.displayName.value = model.currentUser.displayName
+    changeProfileSettingForm.bio.value = model.currentUser.bio
+    changeProfileSettingForm.birthYear.value = model.currentUser.birthYear
+    changeProfileSettingForm.picture1preview.src = model.currentUser.images[0]
+    changeProfileSettingForm.picture2preview.src = model.currentUser.images[1]
+    changeProfileSettingForm.picture3preview.src = model.currentUser.images[2]
+
+    document.querySelector(".main .display-name").innerHTML = model.currentUser.displayName
+    document.querySelector(".right .display-name").innerHTML = model.currentUser.displayName + ' ' + (new Date().getUTCFullYear() - model.currentUser.birthYear)
+    document.querySelector(".right .bio").innerHTML = model.currentUser.bio
+    document.querySelector("#picture1slide").src = model.currentUser.images[0]
+    document.querySelector("#picture2slide").src = model.currentUser.images[1]
+    document.querySelector("#picture3slide").src = model.currentUser.images[2]
+
+    const inputHandler = (e) => {
+        document.querySelector(".right .display-name").innerHTML = changeProfileSettingForm.displayName.value + ' ' + (new Date().getUTCFullYear() - changeProfileSettingForm.birthYear.value)
+        document.querySelector(".right .bio").innerHTML = changeProfileSettingForm.bio.value
+        document.querySelector("#picture1slide").src = changeProfileSettingForm.picture1preview.src
+        document.querySelector("#picture2slide").src = changeProfileSettingForm.picture2preview.src
+        document.querySelector("#picture3slide").src = changeProfileSettingForm.picture3preview.src
+
+
+    }
+    changeProfileSettingForm.addEventListener('input', inputHandler);
+    changeProfileSettingForm.addEventListener('propertychange', inputHandler);
+    changeProfileSettingForm.addEventListener('change', inputHandler);
+
+}
+
 // ======================================================
 
-// view.showMatches = () => {
-//     document.querySelector('.list-matches').innerHTML = '' // refresh list after sign out and sign back in
-//     for (oneMatch of model.matches) {
-//         view.addMatch(oneMatch)
-//     }
-
+view.showMatches = () => {
+    document.querySelector('.list-matches').innerHTML = '' // refresh list after sign out and sign back in
+    for (oneMatch of model.matches) {
+        view.addMatch(oneMatch)
+    }
+}
 
 // }
+view.addMatch = (match) => {
+    
+    const matchWrapper = document.createElement('div')
+    matchWrapper.classList.add('match')
+    matchWrapper.classList.add('p-2')
+    matchWrapper.id = match.uid
 
-// view.addMatch = (match) => {
-//     const matchWrapper = document.createElement('div')
-//     matchWrapper.classList.add('match')
-//     matchWrapper.id = match.id
-//     if (match.id === model.currentMatch.id) {
-//         matchWrapper.classList.add('current')
-//     }
-//     matchWrapper.innerHTML = `
-//         <img src='https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png' />
-//         <div class ="match-title">${match.id}</div>
-//         `
-//     matchWrapper.addEventListener('click', () => {
-//         document.querySelector('.current').classList.remove('current')
-//         matchWrapper.classList.add('current')
-//         model.changeCurrentMatch(match.id)
-     
-//         // matchWrapper.lastElementChild.style = 'display: none'
-//     })
+    if (match.uid === model.currentMatch.uid) {
+        matchWrapper.classList.add('current')
+    }
+    matchWrapper.innerHTML = `
+        <div class="card bg-dark text-white ">
+            <img src="${match.images[0]}" class="card-img" alt="..." />
+            <div class="card-img-overlay">
+                <div class="card-title position-absolute bottom-0">${match.displayName}</div>
+            </div>
+        </div>
+        `
+    matchWrapper.addEventListener('click', () => {
+        document.querySelector('.match.current').classList.remove('current')
+        matchWrapper.classList.add('current')
+        // model.changeCurrentMatch(match.uid)
 
-//     document.querySelector('.list-matches').appendChild(matchWrapper)
-// }
+        // matchWrapper.lastElementChild.style = 'display: none'
+    })
+
+    document.querySelector('.list-matches').appendChild(matchWrapper)
+}

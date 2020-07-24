@@ -83,54 +83,6 @@ components.chatScreen = `
                 <div class="tab-pane fade show active" id="nav-matches" role="tabpanel" aria-labelledby="nav-matches-tab">
                 <div class="list-matches d-flex flex-wrap justify-content-even">
                 
-                 
-                    <div class="matches p-2">
-                        <div class="card bg-dark text-white ">
-                          <img src="../images/320x400_pic1.jpg" class="card-img" alt="...">
-                          <div class="card-img-overlay">
-                            <div class="card-title position-absolute bottom-0">Giang</div>
-                          </div>
-                        </div>
-                    </div>
-                    <div class="matches p-2">
-                        <div class="card bg-dark text-white ">
-                          <img src="../images/320x400_pic2.jpg" class="card-img" alt="...">
-                          <div class="card-img-overlay">
-                            <div class="card-title position-absolute bottom-0 ">Huong</div>
-                            
-                          </div>
-                        </div>
-                    </div>
-                    <div class="matches p-2">
-                        <div class="card bg-dark text-white ">
-                          <img src="../images/320x400_pic3.jpg" class="card-img" alt="...">
-                          <div class="card-img-overlay">
-                            <div class="card-title position-absolute bottom-0 ">Thao</div>
-                            
-                          </div>
-                        </div>
-                    </div>
-                    <div class="matches w-33 p-2">
-                        <div class="card bg-dark text-white ">
-                          <img src="../images/320x400_pic4.jpg" class="card-img" alt="...">
-                          <div class="card-img-overlay">
-                            <div class="card-title position-absolute bottom-0 ">Anh</div>
-                            
-                          </div>
-                        </div>
-                    </div>
-                    <div class="matches w-33 p-2">
-                        <div class="card bg-dark text-white ">
-                          <img src="../images/320x400_pic5.jpg" class="card-img" alt="...">
-                          <div class="card-img-overlay">
-                            <div class="card-title position-absolute bottom-0 ">Linh</div>
-                            
-                          </div>
-                        </div>
-                    </div>
-                 
-                    
-
                 </div>
                 </div>
                 <div class="tab-pane fade" id="nav-chats" role="tabpanel" aria-labelledby="nav-chats-tab">
@@ -160,7 +112,13 @@ components.chatScreen = `
                     </form>
                 </div>
             </div>
-           
+
+            <div class="aside-right">
+                <div class="list-users">
+                        TODO: hiển thị profile user đc chọn
+                </div>
+
+            
                 
             </div>
         </div>
@@ -174,11 +132,12 @@ components.changeProfileSettingScreen = `
     </div>    
     <div class="profile-container d-flex p-5 justify-content-around">
         <div class="main">
-            <h3 class="mb-1rem">My profile setting</h3>
+            <h3 class="mb-1rem display-name"></h3>
             <form id="change-profile-setting-form">
                 
                 <div class="input-wrapper mb-1rem">
-                    <input type="text" name="displayName" placeholder="Display Name">
+                    <input type="text" name="displayName" placeholder="Display Name" 
+                    >
                     <div class="error" id="display-name-error"></div>
                 </div>
 
@@ -194,17 +153,23 @@ components.changeProfileSettingScreen = `
 
 
                 <div class="input-wrapper mb-1rem">
-                    <input type="file" name="picture1" accept="image/*" placeholder="Picture 1">
+                    <img width="100" id="picture1preview" name="picture1preview" src="" />
+                    <input id="imgInp" type="file" name="picture1" accept="image/*" placeholder="Picture 1" 
+                    onchange="document.getElementById('picture1preview').src = window.URL.createObjectURL(this.files[0])">
                     <div class="error" id="picture1-error"></div>
                 </div>
 
                 <div class="input-wrapper mb-1rem">
-                    <input type="file" name="picture2" accept="image/*" placeholder="Picture 2">
+                    <img width="100" id="picture2preview" name="picture2preview" src="" />
+                    <input type="file" name="picture2" accept="image/*" placeholder="Picture 2" 
+                    onchange="document.getElementById('picture2preview').src = window.URL.createObjectURL(this.files[0])">
                     <div class="error" id="picture2-error"></div>
                 </div>
 
                 <div class="input-wrapper mb-1rem">
-                    <input type="file" name="picture3" accept="image/*" placeholder="Picture 3">
+                    <img width="100" id="picture3preview" name="picture3preview" src="" />
+                    <input type="file" name="picture3" accept="image/*" placeholder="Picture 3" 
+                    onchange="document.getElementById('picture3preview').src = window.URL.createObjectURL(this.files[0])">
                     <div class="error" id="picture3-error"></div>
                 </div>
             
@@ -225,18 +190,18 @@ components.changeProfileSettingScreen = `
                 </ol>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                    <img class="d-block " src="../images/320x400_pic1.jpg" alt="First slide">
+                    <img id="picture1slide" width="320" class="d-block" src="../images/320x400_pic1.jpg" alt="First slide"/>
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>Thanh</h5>
-                        <p>Hello test bio 1</p>
+                        <h5 class="display-name">a</h5>
+                        <p class="bio">Hello test bio 1</p>
                     </div>
                     </div>
                     <div class="carousel-item">
-                    <img class="d-block " src="../images/320x400_pic2.jpg" alt="Second slide">
+                    <img class="d-block" id="picture2slide" width="320" src="../images/320x400_pic2.jpg" alt="Second slide"/>
                     
                     </div>
                     <div class="carousel-item">
-                    <img class="d-block " src="../images/320x400_pic3.jpg" alt="Third slide">
+                    <img class="d-block" id="picture3slide" width="320" src="../images/320x400_pic3.jpg" alt="Third slide"/>
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -253,4 +218,91 @@ components.changeProfileSettingScreen = `
         </div>
     </div>
 </div>
+`
+
+
+
+
+
+components.swipeScreen =`
+    <div class="header">
+        TindX - Say NO to fwb and ons!
+    </div>
+    <div class="chat-container">
+        <div class="aside-left">
+            <div class="my-profile">
+                <button class="btn" id="my-profile">My Profile</button>
+            </div>
+
+            <nav class="p-2">
+                <div class="nav nav-pills d-flex justify-content-center border-0" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active " id="nav-matches-tab" data-toggle="tab" href="#nav-matches" role="tab" aria-controls="nav-matches" aria-selected="true">Matches</a>
+                    <a class="nav-item nav-link" id="nav-chats-tab" data-toggle="tab" href="#nav-chats" role="tab" aria-controls="nav-chats" aria-selected="false">Chats</a>
+
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-matches" role="tabpanel" aria-labelledby="nav-matches-tab">
+                    <div class="list-matches d-flex flex-wrap justify-content-even">
+
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-chats" role="tabpanel" aria-labelledby="nav-chats-tab">
+
+                    <div class="list-conversations">
+
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="main">
+            <div class="profile-container d-flex p-5 justify-content-around">
+                <div id="carouselExampleIndicators" class="carousel" data-interval="false">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img id="picture1slide" width="320" class="d-block" src="../images/320x400_pic1.jpg" alt="First slide" />
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5 class="display-name">a</h5>
+                                <p class="bio">Hello test bio 1</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block" id="picture2slide" width="320" src="../images/320x400_pic2.jpg" alt="Second slide" />
+
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block" id="picture3slide" width="320" src="../images/320x400_pic3.jpg" alt="Third slide" />
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+
+
+            </div>
+            <div class="button-wrapper d-flex justify-content-center">
+                <button class="btn" type="button">Dislike</button>
+                <button class="btn" type="button">Like</button>
+            </div>
+        </div>
+
+
+    </div>
 `

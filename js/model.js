@@ -3,7 +3,7 @@ model.currentUser = undefined
 model.collectionName = 'conversations'
 model.currentConversation = undefined
 model.conversations = undefined
-model.currentFriend = undefined
+model.currentChatFriend = undefined
 
 model.register = (firstName, lastname, email, password) => {
     firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
@@ -24,22 +24,25 @@ model.login = (email, password) => {
     firebase.auth().signInWithEmailAndPassword(email, password)
         .then((user) => {
             console.log(user)
-            if (user.user.emailVerified) {
+            // user.user.emailVerified = true
+            if (true) {
                 model.currentUser = user.user
                 // model.currentUser = {
                 //     displayName: user.user.displayName,
                 //     email: user.user.email
                 // }
-                console.log(model.currentUser)
-                view.setActiveScreen('chatScreen')
+                // console.log(model.currentUser)
+                view.setActiveScreen('swipeScreen')
 
                 // nếu chưa có document trong collection users thì thêm mới!
                 firebase.firestore().collection('users').where('uid', '==', model.currentUser.uid).limit(1).get().then(
                     (querySnapshot) => {
                         if (querySnapshot.docs.length === 1) {
                             console.log("duong: user already exist in collection users!")
+                            model.currentUser = utils.getDataFromDoc(querySnapshot.docs[0])     //gán model.currentUser vào record trong collection users 
+                            console.log(model.currentUser)
                         } else {
-                            model.createUserRecord(model.currentUser)
+                            model.createUserProfile(model.currentUser)
                             view.setActiveScreen('changeProfileSettingScreen') //log in lần đầu thì chuyển đến sửa profile ngay
                         }
                     }
@@ -63,9 +66,9 @@ model.loadConversations = () => {
 
             if (data.length > 0) {
                 model.currentConversation = data[0]
-                model.currentFriend = model.currentConversation.users
-                .filter(item => item !== model.currentUser.email)[0]
-                view.showCurrentConversation()
+                model.currentChatFriend = model.currentConversation.users
+                    .filter(item => item !== model.currentUser.email)[0]
+                // view.showCurrentConversation()
             }
 
             view.showConversation()
@@ -153,38 +156,22 @@ model.changeCurrentConversation = (conversationId) => {
         .filter(item => item.id === conversationId)[0]
     console.log(model.currentConversation)
 
-    model.currentFriend = model.currentConversation.users
+    model.currentChatFriend = model.currentConversation.users
         .filter(item => item !== model.currentUser.email)[0]   //khi click vào 1 conversation, update title thành email của người bạn chat
-    console.log(model.currentFriend)
+    console.log(model.currentChatFriend)
     view.showCurrentConversation()
 }
 
-model.changeProfileSetting = (profileSetting) => {
 
-    const docIdUpdate = model.currentUser.uid
-    console.log(docIdUpdate)
-    console.log(profileSetting)
 
-    firebase.firestore().collection('users')
-        .where('uid', '==', model.currentUser.uid)
-        .limit(1)
-        .get()
-        .then(
-            (querySnapshot) => {
-                var user = querySnapshot.docs[0];
-                user.ref.update(profileSetting)
-            }
-        )
-    // update(profileSetting).then(res => {
-    //     alert('updated!')
-    // })
+model.createConversation = (conversation) => {
+
+    firebase.firestore().collection(model.collectionName).add(conversation)
     view.backToChatScreen()
 
 }
 
-
-
-model.addUser = (email) => {
+model.addUser = (email) => {   //add user to conversation
     const dataToUpdate = {
         users: firebase.firestore.FieldValue.arrayUnion(email)
     }
@@ -194,12 +181,126 @@ model.addUser = (email) => {
 
 
 
-model.createUserRecord = (currentUser) => {
+model.createUserProfile = (currentUser) => {
+    now = new Date().toISOString
     const dataToCreate = {
         uid: currentUser.uid,
+        displayName: currentUser.displayName,
+        email: currentUser.email,
+        bio: "",
+        birthYear: "",
+        images: ["", "", ""],
+        matchedId: [],
+        likedId: [],
+        dislikedId: [],
+        // lastActive: now,
+
+
     }
     firebase.firestore().collection('users').add(dataToCreate).then(res => {
-        // alert('added!')
+        // model.currentUser = dataToCreate
+        alert("created!")
     })
 
+}
+
+model.changeProfileSetting = (profileSetting) => {
+    let dataToUpdate = undefined
+    if (profileSetting.images.length !== 0) {
+        profileSetting.images = profileSetting.images.map((picture) => utils.uploadPic(picture))
+        dataToUpdate = {
+            displayName: profileSetting.displayName,
+            bio: profileSetting.bio,
+            birthYear: profileSetting.birthYear,
+            // images: firebase.firestore.FieldValue.arrayUnion(profileSetting.images),
+            images: profileSetting.images
+        }
+    } else {
+        delete profileSetting.images;
+        dataToUpdate = profileSetting
+    }
+
+
+    firebase.firestore().collection('users')
+        .where('uid', '==', model.currentUser.uid)
+        .limit(1)
+        .get()
+        .then(
+            (querySnapshot) => {
+                var user = querySnapshot.docs[0];
+                user.ref.update(dataToUpdate).then(
+                    view.showCurrentUserProfile()
+                )
+
+
+            }
+        )
+
+
+
+    // view.backToChatScreen()
+
+}
+
+model.loadMatches = () => {
+    
+    if (model.currentUser.matchedId.length > 0) {
+        console.log("eeee");
+        console.log(model.currentUser.matchedId)
+
+        firebase.firestore().collection('users').where('uid','in',model.currentUser.matchedId).get()
+        .then(res => {
+            console.log("ggggg")
+            const data = utils.getDataFromDocs(res.docs)
+            model.matches = data
+            model.currentMatch = data[0]
+            view.showMatches()
+        })
+
+    }
+    // console.log("ffff");
+    // console.log(model.matches)
+    
+    // view.showMatches()
+}
+
+// model.changeCurrentMatch = (match) => {
+
+// }
+
+
+model.listenUserChange = () => {
+
+    firebase.firestore().collection('users')
+        .where('uid', '==', model.currentUser.uid)
+        .onSnapshot((res) => {
+
+            // console.log(res)
+            const docChanges = res.docChanges()
+            console.log(docChanges)
+
+            for (oneChange of docChanges) {
+                const type = oneChange.type
+                console.log(type)
+                const oneChangeData = utils.getDataFromDoc(oneChange.doc)
+                console.log(oneChangeData);
+                if (type === 'modified') {
+                    console.log(oneChangeData)
+
+                    model.currentUser = oneChangeData
+                    view.showCurrentUserProfile()
+
+                }
+
+            }
+        })
+
+    // khi ai đó  like mình, check xem mình đã like họ chưa --> update matches list
+}
+
+model.getListRecommendation = () => {
+    listOfLike = model.currentUser.likedId
+    listOfDislike = model.currentUser.dislikedId
+    firebase.firestore().collection('users')
+        .where(uid, '')
 }

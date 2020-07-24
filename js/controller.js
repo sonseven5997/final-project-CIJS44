@@ -32,29 +32,27 @@ controller.changeProfileSetting = ({ displayName, bio, birthYear, picture1, pict
     view.setErrorMessage('bio-error', !bio ? 'Please input bio' : '')
     view.setErrorMessage('birth-year-error', !birthYear ? 'Please input birth year' : '')
 
-    
-    if (picture1.length === 0) {
-        view.setErrorMessage('picture1-error', 'Please input picture 1')
+    images=[]
+    if (!picture1) {
+        // view.setErrorMessage('picture1-error', 'Please input at least one picture')
     } else {
-        picture1 = utils.uploadPic(picture1[0])
-        console.log(picture1)
+        images.push(picture1)
     }
 
-    if (picture2.length === 0) {
-        view.setErrorMessage('picture2-error', 'Please input picture 2')
+    if (!picture2) {
+        // view.setErrorMessage('picture2-error', 'Please input picture 2')
     } else {
-        picture2 = utils.uploadPic(picture2[0])
+        images.push(picture2)
     }
 
-    if (picture3.length === 0) {
-        view.setErrorMessage('picture3-error', 'Please input picture 3')
+    if (!picture3) {
+        // view.setErrorMessage('picture3-error', 'Please input picture 3')
     } else {
-        picture3 = utils.uploadPic(picture3[0])
+        images.push(picture3)
     }
 
-    images = [picture1, picture2, picture3]
     console.log(images)
-    if (bio && displayName && birthYear && images.length===3) {
+    if (bio && displayName && birthYear) {
         model.changeProfileSetting({
             displayName,
             bio,

@@ -13,13 +13,28 @@ window.onload = () => {
   firebase.initializeApp(firebaseConfig);
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      if (user.emailVerified) {
+      //user.emailVerified = true
+      if (true) {
         model.currentUser = user
-        // model.currentUser = {
-        //   displayName: user.displayName,
-        //   email: user.email
-        // }
-        view.setActiveScreen('chatScreen')
+
+        // console.log(model.currentUser)
+        
+
+        firebase.firestore().collection('users').where('uid', '==', model.currentUser.uid).limit(1).get().then(
+          (querySnapshot) => {
+            if (querySnapshot.docs.length === 1) {
+              console.log("duong: user already exist in collection users!")
+              model.currentUser = utils.getDataFromDoc(querySnapshot.docs[0])     //gán model.currentUser vào record trong collection users 
+              console.log(model.currentUser)
+              view.setActiveScreen('swipeScreen')
+            } else {
+              // model.createUserProfile(model.currentUser)
+              view.setActiveScreen('changeProfileSettingScreen') //log in lần đầu thì chuyển đến sửa profile ngay
+            }
+          }
+        )
+        
+
       } else {
         view.setActiveScreen('loginScreen')
       }

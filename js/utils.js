@@ -11,6 +11,7 @@ utils.getDataFromDocs = (docs) => {
 }
 
 utils.uploadPic = (file) => {
+    if (!file) return '';
     const fileName = file.name
     const filePath = `${model.currentUser.uid}/${fileName}`
     const fileRef = firebase.storage().ref().child(filePath)

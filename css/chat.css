@@ -139,8 +139,12 @@
   border: 0px!important;
 }
 
-.matches {
+.match {
   width: 33%;
+}
+
+.match.current {
+  border: 5px red solid;
 }
 
 .card-title {
@@ -152,8 +156,15 @@
   font-size: 1rem;
   font-family: ProximaNova, sans-serif;
   line-height: 1.3125;
+  /* color: red; */
 }
 /* 
 .my-profile-setting-wrapper .main {
   width: 30%;
 } */
+
+.chat-container .aside-right {
+  border-left: 1px solid #dbdbdb;
+  font-size: 14px;
+  width: 30%;
+}
