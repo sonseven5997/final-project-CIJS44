@@ -24,3 +24,4 @@ utils.uploadPic = (file) => {
 utils.getFileUrl = (fileRef) => {
     return `https://firebasestorage.googleapis.com/v0/b/${fileRef.bucket}/o/${encodeURIComponent(fileRef.fullPath)}?alt=media`
 }
+

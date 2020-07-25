@@ -102,7 +102,13 @@ components.chatScreen = `
             <div class="main">
                 <div class="conversation-detail">
                 
-                    <div class="conversation-title"></div>
+                    
+                    <div class="conversation-title-wrapper">
+                        <div class="conversation-title"></div>
+                        <button type="button" id='back-to-swipe'><i class="fa fa-times-circle-o" aria-hidden="true"></i></button>
+                    </div>
+
+
                     <div class="list-message">
 
                     </div>
@@ -123,7 +129,6 @@ components.chatScreen = `
             </div>
         </div>
 `
-
 
 components.changeProfileSettingScreen = `
 <div class = "my-profile-setting-wrapper">
@@ -182,38 +187,6 @@ components.changeProfileSettingScreen = `
         </div>
 
         <div class="right">
-            <div id="carouselExampleIndicators" class="carousel" data-interval="false">
-                <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                </ol>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                    <img id="picture1slide" width="320" class="d-block" src="../images/320x400_pic1.jpg" alt="First slide"/>
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5 class="display-name">a</h5>
-                        <p class="bio">Hello test bio 1</p>
-                    </div>
-                    </div>
-                    <div class="carousel-item">
-                    <img class="d-block" id="picture2slide" width="320" src="../images/320x400_pic2.jpg" alt="Second slide"/>
-                    
-                    </div>
-                    <div class="carousel-item">
-                    <img class="d-block" id="picture3slide" width="320" src="../images/320x400_pic3.jpg" alt="Third slide"/>
-                    </div>
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-
 
         </div>
     </div>
@@ -262,38 +235,7 @@ components.swipeScreen =`
 
         </div>
         <div class="main">
-            <div class="profile-container d-flex p-5 justify-content-around">
-                <div id="carouselExampleIndicators" class="carousel" data-interval="false">
-                    <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                    </ol>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img id="picture1slide" width="320" class="d-block" src="../images/320x400_pic1.jpg" alt="First slide" />
-                            <div class="carousel-caption d-none d-md-block">
-                                <h5 class="display-name">a</h5>
-                                <p class="bio">Hello test bio 1</p>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block" id="picture2slide" width="320" src="../images/320x400_pic2.jpg" alt="Second slide" />
-
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block" id="picture3slide" width="320" src="../images/320x400_pic3.jpg" alt="Third slide" />
-                        </div>
-                    </div>
-                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
+            <div class="profile-container ">
 
 
             </div>
@@ -304,5 +246,54 @@ components.swipeScreen =`
         </div>
 
 
+    </div>
+`
+components.swipe = `
+        <div class="main">
+            <div class="profile-container ">
+
+
+            </div>
+            <div class="button-wrapper d-flex justify-content-center">
+                <button class="btn" type="button">Dislike</button>
+                <button class="btn" type="button">Like</button>
+            </div>
+        </div>
+`
+components.carousel = `
+    <div class="d-flex p-5 justify-content-around">
+        <div id="carouselExampleIndicators" class="carousel" data-interval="false">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img id="picture1slide" width="320" class="d-block" src="../images/320x400_pic1.jpg" alt="First slide" />
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 class="display-name">a</h5>
+                        <p class="bio">Hello test bio 1</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block" id="picture2slide" width="320" src="../images/320x400_pic2.jpg" alt="Second slide" />
+
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block" id="picture3slide" width="320" src="../images/320x400_pic3.jpg" alt="Third slide" />
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+    </div>
     </div>
 `

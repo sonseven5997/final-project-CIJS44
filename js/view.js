@@ -71,11 +71,14 @@ view.setActiveScreen = (screenName) => {
             document.querySelector('#sendMessageForm input').addEventListener('click', () => {
                 view.hideNotify(model.currentConversation.id)
             })
+            document.getElementById('back-to-swipe').addEventListener('click', () => {
+                view.backToSwipeScreen()
+            })
 
             break
         case 'changeProfileSettingScreen':
             document.getElementById('app').innerHTML = components.changeProfileSettingScreen
-
+            document.querySelector('.profile-container .right').innerHTML = components.carousel
             document.getElementById('back-to-chat').addEventListener('click', () => {
                 view.backToChatScreen()
             })
@@ -100,13 +103,13 @@ view.setActiveScreen = (screenName) => {
             break
         case 'swipeScreen':
             document.getElementById('app').innerHTML = components.swipeScreen
-
+            document.querySelector('.chat-container .main .profile-container').innerHTML = components.carousel
 
             document.getElementById('my-profile')
                 .addEventListener('click', () => {
                     view.setActiveScreen('changeProfileSettingScreen')
                 })
-                console.log(model.currentUser)
+            console.log(model.currentUser)
             model.loadConversations()
             model.loadMatches()
             // model.listenConversationChange()
@@ -114,11 +117,6 @@ view.setActiveScreen = (screenName) => {
 
 
             break
-
-
-
-
-
 
     }
 }
@@ -233,9 +231,12 @@ view.backToChatScreen = () => {
     document.querySelector('#sendMessageForm input').addEventListener('click', () => {
         view.hideNotify(model.currentConversation.id)
     })
-    model.loadMatches()
-    model.loadConversations()
-    model.listenConversationChange()
+    document.getElementById('back-to-swipe').addEventListener('click', () => {
+        view.backToSwipeScreen()
+    })
+    view.showMatches()
+    // model.loadConversations()
+    // model.listenConversationChange()
 
 }
 
@@ -283,6 +284,20 @@ view.showCurrentUserProfile = () => {
 }
 
 // ======================================================
+view.showCurrentMatch = () => {
+    // đổi về màn chat screen hay không?
+    
+    document.querySelector('.chat-container .main').innerHTML = components.carousel
+    // console.log(model.currentMatch)
+    // document.querySelector(".main .display-name").innerHTML = model.currentUser.displayName
+    document.querySelector(".display-name").innerHTML = model.currentMatch.displayName + ' ' + (new Date().getUTCFullYear() - model.currentMatch.birthYear)
+    document.querySelector(".bio").innerHTML = model.currentMatch.bio
+    document.querySelector("#picture1slide").src = model.currentMatch.images[0]
+    document.querySelector("#picture2slide").src = model.currentMatch.images[1]
+    document.querySelector("#picture3slide").src = model.currentMatch.images[2]
+
+}
+
 
 view.showMatches = () => {
     document.querySelector('.list-matches').innerHTML = '' // refresh list after sign out and sign back in
@@ -293,15 +308,15 @@ view.showMatches = () => {
 
 // }
 view.addMatch = (match) => {
-    
+
     const matchWrapper = document.createElement('div')
     matchWrapper.classList.add('match')
     matchWrapper.classList.add('p-2')
     matchWrapper.id = match.uid
 
-    if (match.uid === model.currentMatch.uid) {
-        matchWrapper.classList.add('current')
-    }
+    // if (match.uid === model.currentMatch.uid) {
+    //     matchWrapper.classList.add('current')
+    // }
     matchWrapper.innerHTML = `
         <div class="card bg-dark text-white ">
             <img src="${match.images[0]}" class="card-img" alt="..." />
@@ -311,12 +326,31 @@ view.addMatch = (match) => {
         </div>
         `
     matchWrapper.addEventListener('click', () => {
-        document.querySelector('.match.current').classList.remove('current')
+        view.backToChatScreen()
+        if (document.querySelector('.match.current')) {
+            document.querySelector('.match.current').classList.remove('current')
+        }
         matchWrapper.classList.add('current')
-        // model.changeCurrentMatch(match.uid)
+        model.changeCurrentMatch(match)
 
         // matchWrapper.lastElementChild.style = 'display: none'
     })
 
     document.querySelector('.list-matches').appendChild(matchWrapper)
 }
+
+
+view.backToSwipeScreen = () => {
+
+    document.getElementById('app').innerHTML = components.swipeScreen
+    document.querySelector('.chat-container .main .profile-container').innerHTML = components.carousel
+
+    document.getElementById('my-profile')
+        .addEventListener('click', () => {
+            view.setActiveScreen('changeProfileSettingScreen')
+        })
+    console.log(model.currentUser)
+    view.showMatches()
+    view.showConversation()
+}
+

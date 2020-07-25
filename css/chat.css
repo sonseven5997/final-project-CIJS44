@@ -101,8 +101,6 @@
   text-align: center;
 }
 
-
-
 .chat-container .email {
   padding: 5px 10px;
   padding-bottom: 0;
@@ -158,6 +156,7 @@
   line-height: 1.3125;
   /* color: red; */
 }
+
 /* 
 .my-profile-setting-wrapper .main {
   width: 30%;
@@ -167,4 +166,18 @@
   border-left: 1px solid #dbdbdb;
   font-size: 14px;
   width: 30%;
+}
+
+#back-to-swipe {
+  position: absolute;
+  top: 15%;
+  right: 20px;
+  background: none;
+  border: none;
+  color: #dc3545c7;
+  font-size: 28px;
+}
+
+.conversation-title-wrapper {
+  position: relative;
 }

@@ -253,7 +253,7 @@ model.loadMatches = () => {
             console.log("ggggg")
             const data = utils.getDataFromDocs(res.docs)
             model.matches = data
-            model.currentMatch = data[0]
+            // model.currentMatch = data[0]
             view.showMatches()
         })
 
@@ -264,9 +264,12 @@ model.loadMatches = () => {
     // view.showMatches()
 }
 
-// model.changeCurrentMatch = (match) => {
-
-// }
+model.changeCurrentMatch = (match) => {
+    
+    model.currentMatch = match
+    
+    view.showCurrentMatch()
+}
 
 
 model.listenUserChange = () => {

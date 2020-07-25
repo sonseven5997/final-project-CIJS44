@@ -43,3 +43,7 @@
   font-size: 24px;
   line-height: 64px;
 }
+
+img{
+ object-fit: cover;
+}
