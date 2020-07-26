@@ -1,5 +1,7 @@
 const view = {}
 
+view.state = '' //chat, swipe, matches
+
 view.setActiveScreen = (screenName) => {
     document.getElementById('app').innerHTML = components.welcomeScreen
     switch (screenName) {
@@ -40,6 +42,7 @@ view.setActiveScreen = (screenName) => {
             })
             break
         case 'chatScreen':
+            view.state = 'chat'
             document.getElementById('app').innerHTML = components.chatScreen
             const sendMessageForm = document.querySelector('#sendMessageForm')
             // sendMessageForm.message.focus()
@@ -52,7 +55,10 @@ view.setActiveScreen = (screenName) => {
                         createdAt: new Date().toISOString()
                     }
                     // view.addMessage(message)
-                    model.addMessage(message)
+                    if (view.state === 'chat') {
+                        model.addMessage(message)
+                    }
+
                 } else {
                     // alert('blank message?')
                 }
@@ -77,6 +83,7 @@ view.setActiveScreen = (screenName) => {
 
             break
         case 'changeProfileSettingScreen':
+            view.state = 'profile'
             document.getElementById('app').innerHTML = components.changeProfileSettingScreen
             document.querySelector('.profile-container .right').innerHTML = components.carousel
             document.getElementById('back-to-chat').addEventListener('click', () => {
@@ -102,8 +109,10 @@ view.setActiveScreen = (screenName) => {
             })
             break
         case 'swipeScreen':
-            document.getElementById('app').innerHTML = components.swipeScreen
-            document.querySelector('.chat-container .main .profile-container').innerHTML = components.carousel
+            view.state = 'swipe'
+            document.getElementById('app').innerHTML = components.chatScreen
+            document.querySelector('.chat-container .main').innerHTML = components.swipe
+            document.querySelector('.chat-container .main .conversation-detail').innerHTML = components.carousel
 
             document.getElementById('my-profile')
                 .addEventListener('click', () => {
@@ -112,8 +121,8 @@ view.setActiveScreen = (screenName) => {
             console.log(model.currentUser)
             model.loadConversations()
             model.loadMatches()
-            // model.listenConversationChange()
-            // model.listenUserChange()
+            model.listenConversationChange()
+            model.listenUserChange()
 
 
             break
@@ -178,9 +187,9 @@ view.addConversation = (conversation) => {
     const conversationWrapper = document.createElement('div')
     conversationWrapper.classList.add('conversation')
     conversationWrapper.id = conversation.id
-    if (conversation.id === model.currentConversation.id) {
-        conversationWrapper.classList.add('current')
-    }
+    // if (conversation.id === model.currentConversation.id) {
+    //     conversationWrapper.classList.add('current')
+    // }
 
 
 
@@ -190,9 +199,27 @@ view.addConversation = (conversation) => {
         <div class ="conversation-notify"></div>
         `
     conversationWrapper.addEventListener('click', () => {
-        document.querySelector('.conversation.current').classList.remove('current')
+        if (view.state === 'swipe') {
+            view.backToChatScreen()
+            // document.querySelector('.chat-container .main').innerHTML = components.chat
+
+            document.getElementById("nav-matches-tab").classList.remove('active')
+            document.getElementById("nav-chats-tab").classList.add('active')
+            document.getElementById("nav-matches").classList.remove('active', 'show')
+            document.getElementById("nav-chats").classList.add('active', 'show')
+
+        }
+        view.state = 'chat'
+
+
+        if (document.querySelector('.conversation.current')) {
+            document.querySelector('.conversation.current').classList.remove('current')
+        }
         conversationWrapper.classList.add('current')
+        console.log('test')
+        console.log(conversation.id)
         model.changeCurrentConversation(conversation.id)
+
         view.hideNotify(conversation.id)
         // conversationWrapper.lastElementChild.style = 'display: none'
     })
@@ -201,7 +228,19 @@ view.addConversation = (conversation) => {
 }
 
 view.backToChatScreen = () => {
-    document.getElementById('app').innerHTML = components.chatScreen
+
+    if(view.state==='profile'){
+        document.getElementById('app').innerHTML = components.chatScreen
+        view.showConversation()
+        view.showCurrentConversation()
+        view.showMatches()
+    } else {
+        document.querySelector('.chat-container .main').innerHTML = components.chat
+    }
+
+    view.state = 'chat'
+
+
     const sendMessageForm = document.querySelector('#sendMessageForm')
     // sendMessageForm.message.focus()
     sendMessageForm.addEventListener('submit', (e) => {
@@ -213,7 +252,9 @@ view.backToChatScreen = () => {
                 createdAt: new Date().toISOString()
             }
             // view.addMessage(message)
-            model.addMessage(message)
+            if (view.state === 'chat') {
+                model.addMessage(message)
+            }
         } else {
             // alert('blank message?')
         }
@@ -223,8 +264,7 @@ view.backToChatScreen = () => {
         .addEventListener('click', () => {
             view.setActiveScreen('changeProfileSettingScreen')
         })
-    view.showConversation()
-    view.showCurrentConversation()
+
     const addUserForm = document.getElementById('add-user-form')
 
 
@@ -234,7 +274,7 @@ view.backToChatScreen = () => {
     document.getElementById('back-to-swipe').addEventListener('click', () => {
         view.backToSwipeScreen()
     })
-    view.showMatches()
+    
     // model.loadConversations()
     // model.listenConversationChange()
 
@@ -286,10 +326,10 @@ view.showCurrentUserProfile = () => {
 // ======================================================
 view.showCurrentMatch = () => {
     // đổi về màn chat screen hay không?
-    
-    document.querySelector('.chat-container .main').innerHTML = components.carousel
+
+    document.querySelector('.chat-container .main .conversation-detail .list-message').innerHTML = components.carousel
     // console.log(model.currentMatch)
-    // document.querySelector(".main .display-name").innerHTML = model.currentUser.displayName
+    document.querySelector(".main .conversation-title").innerHTML = model.currentMatch.displayName
     document.querySelector(".display-name").innerHTML = model.currentMatch.displayName + ' ' + (new Date().getUTCFullYear() - model.currentMatch.birthYear)
     document.querySelector(".bio").innerHTML = model.currentMatch.bio
     document.querySelector("#picture1slide").src = model.currentMatch.images[0]
@@ -314,7 +354,7 @@ view.addMatch = (match) => {
     matchWrapper.classList.add('p-2')
     matchWrapper.id = match.uid
 
-    // if (match.uid === model.currentMatch.uid) {
+    // if ((model.currentMatch) && (match.uid === model.currentMatch.uid)) {
     //     matchWrapper.classList.add('current')
     // }
     matchWrapper.innerHTML = `
@@ -326,14 +366,21 @@ view.addMatch = (match) => {
         </div>
         `
     matchWrapper.addEventListener('click', () => {
-        view.backToChatScreen()
+        if (view.state === 'swipe') {
+            view.backToChatScreen()
+
+            // document.querySelector('.chat-container .main').innerHTML = components.chat
+            // document.getElementById("nav-chats-tab").classList.remove('active')
+            // document.getElementById("nav-matches-tab").classList.add('active')
+        }
+        view.state = 'match'
         if (document.querySelector('.match.current')) {
             document.querySelector('.match.current').classList.remove('current')
         }
-        matchWrapper.classList.add('current')
         model.changeCurrentMatch(match)
 
-        // matchWrapper.lastElementChild.style = 'display: none'
+        matchWrapper.classList.add('current')
+
     })
 
     document.querySelector('.list-matches').appendChild(matchWrapper)
@@ -341,16 +388,17 @@ view.addMatch = (match) => {
 
 
 view.backToSwipeScreen = () => {
+    view.state = 'swipe'
+    // document.getElementById('app').innerHTML = components.chatScreen
+    document.querySelector('.chat-container .main').innerHTML = components.swipe
+    document.querySelector('.chat-container .main .conversation-detail').innerHTML = components.carousel
 
-    document.getElementById('app').innerHTML = components.swipeScreen
-    document.querySelector('.chat-container .main .profile-container').innerHTML = components.carousel
-
-    document.getElementById('my-profile')
-        .addEventListener('click', () => {
-            view.setActiveScreen('changeProfileSettingScreen')
-        })
-    console.log(model.currentUser)
-    view.showMatches()
-    view.showConversation()
+    // document.getElementById('my-profile')
+    //     .addEventListener('click', () => {
+    //         view.setActiveScreen('changeProfileSettingScreen')
+    //     })
+    // console.log(model.currentUser)
+    // view.showMatches()
+    // view.showConversation()
 }
 

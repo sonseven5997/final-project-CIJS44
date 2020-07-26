@@ -64,7 +64,7 @@ components.loginScreen = `
 
 components.chatScreen = `
         <div class="header">
-        TindX - Say NO to fwb and ons!
+        TindX
         </div>    
         <div class="chat-container">
             <div class="aside-left">
@@ -119,21 +119,14 @@ components.chatScreen = `
                 </div>
             </div>
 
-            <div class="aside-right">
-                <div class="list-users">
-                        TODO: hiển thị profile user đc chọn
-                </div>
-
             
-                
-            </div>
         </div>
 `
 
 components.changeProfileSettingScreen = `
 <div class = "my-profile-setting-wrapper">
     <div class="header">
-    TindX - Say NO to fwb and ons!
+    TindX
     </div>    
     <div class="profile-container d-flex p-5 justify-content-around">
         <div class="main">
@@ -197,69 +190,58 @@ components.changeProfileSettingScreen = `
 
 
 
-components.swipeScreen =`
-    <div class="header">
-        TindX - Say NO to fwb and ons!
-    </div>
-    <div class="chat-container">
-        <div class="aside-left">
-            <div class="my-profile">
-                <button class="btn" id="my-profile">My Profile</button>
-            </div>
+// components.swipeScreen =`
+//     <div class="header">
+//         TindX
+//     </div>
+//     <div class="chat-container">
+//         <div class="aside-left">
+//             <div class="my-profile">
+//                 <button class="btn" id="my-profile">My Profile</button>
+//             </div>
 
-            <nav class="p-2">
-                <div class="nav nav-pills d-flex justify-content-center border-0" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active " id="nav-matches-tab" data-toggle="tab" href="#nav-matches" role="tab" aria-controls="nav-matches" aria-selected="true">Matches</a>
-                    <a class="nav-item nav-link" id="nav-chats-tab" data-toggle="tab" href="#nav-chats" role="tab" aria-controls="nav-chats" aria-selected="false">Chats</a>
+//             <nav class="p-2">
+//                 <div class="nav nav-pills d-flex justify-content-center border-0" id="nav-tab" role="tablist">
+//                     <a class="nav-item nav-link active " id="nav-matches-tab" data-toggle="tab" href="#nav-matches" role="tab" aria-controls="nav-matches" aria-selected="true">Matches</a>
+//                     <a class="nav-item nav-link" id="nav-chats-tab" data-toggle="tab" href="#nav-chats" role="tab" aria-controls="nav-chats" aria-selected="false">Chats</a>
 
-                </div>
-            </nav>
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-matches" role="tabpanel" aria-labelledby="nav-matches-tab">
-                    <div class="list-matches d-flex flex-wrap justify-content-even">
+//                 </div>
+//             </nav>
+//             <div class="tab-content" id="nav-tabContent">
+//                 <div class="tab-pane fade show active" id="nav-matches" role="tabpanel" aria-labelledby="nav-matches-tab">
+//                     <div class="list-matches d-flex flex-wrap justify-content-even">
 
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="nav-chats" role="tabpanel" aria-labelledby="nav-chats-tab">
+//                     </div>
+//                 </div>
+//                 <div class="tab-pane fade" id="nav-chats" role="tabpanel" aria-labelledby="nav-chats-tab">
 
-                    <div class="list-conversations">
-
-
-                    </div>
+//                     <div class="list-conversations">
 
 
-
-                </div>
-
-            </div>
-
-        </div>
-        <div class="main">
-            <div class="profile-container ">
+//                     </div>
 
 
-            </div>
-            <div class="button-wrapper d-flex justify-content-center">
-                <button class="btn" type="button">Dislike</button>
-                <button class="btn" type="button">Like</button>
-            </div>
-        </div>
+
+//                 </div>
+
+//             </div>
+
+//         </div>
+//         <div class="main">
+//             <div class="profile-container ">
 
 
-    </div>
-`
-components.swipe = `
-        <div class="main">
-            <div class="profile-container ">
+//             </div>
+//             <div class="button-wrapper d-flex justify-content-center">
+//                 <button class="btn" type="button">Dislike</button>
+//                 <button class="btn" type="button">Like</button>
+//             </div>
+//         </div>
 
 
-            </div>
-            <div class="button-wrapper d-flex justify-content-center">
-                <button class="btn" type="button">Dislike</button>
-                <button class="btn" type="button">Like</button>
-            </div>
-        </div>
-`
+//     </div>
+// `
+
 components.carousel = `
     <div class="d-flex p-5 justify-content-around">
         <div id="carouselExampleIndicators" class="carousel" data-interval="false">
@@ -297,3 +279,34 @@ components.carousel = `
     </div>
     </div>
 `
+
+components.chat = `<div class="conversation-detail">
+                
+                    
+<div class="conversation-title-wrapper">
+    <div class="conversation-title"></div>
+    <button type="button" id='back-to-swipe'><i class="fa fa-times-circle-o" aria-hidden="true"></i></button>
+</div>
+
+
+<div class="list-message">
+
+</div>
+<form id="sendMessageForm">
+    <input type="text" class="input" name="message" placeholder="Type a message">
+    <button class="btn"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+</form>
+</div>`
+
+components.swipe = `
+<div class="profile-container">
+        <div class="conversation-detail">
+
+
+        </div>
+        <div class="button-wrapper d-flex justify-content-center">
+                <button class="btn" type="button">Dislike</button>
+                <button class="btn" type="button">Like</button>
+        </div>
+        </div>
+        `

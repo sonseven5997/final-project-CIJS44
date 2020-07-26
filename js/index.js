@@ -14,7 +14,7 @@ window.onload = () => {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       //user.emailVerified = true
-      if (true) {
+      if (user.emailVerified) {
         model.currentUser = user
 
         // console.log(model.currentUser)
@@ -28,11 +28,13 @@ window.onload = () => {
               console.log(model.currentUser)
               view.setActiveScreen('swipeScreen')
             } else {
-              // model.createUserProfile(model.currentUser)
+              model.createUserProfile(model.currentUser)
               view.setActiveScreen('changeProfileSettingScreen') //log in lần đầu thì chuyển đến sửa profile ngay
             }
           }
-        )
+        ).catch((e) =>{
+          alert(e.message)
+        })
         
 
       } else {

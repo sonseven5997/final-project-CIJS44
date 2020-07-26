@@ -23,25 +23,29 @@ model.register = (firstName, lastname, email, password) => {
 model.login = (email, password) => {
     firebase.auth().signInWithEmailAndPassword(email, password)
         .then((user) => {
-            console.log(user)
-            // user.user.emailVerified = true
-            if (true) {
+         
+            
+            if (user.user.emailVerified) {
                 model.currentUser = user.user
+                // console.log(user)
                 // model.currentUser = {
                 //     displayName: user.user.displayName,
                 //     email: user.user.email
                 // }
                 // console.log(model.currentUser)
-                view.setActiveScreen('swipeScreen')
+                
 
                 // nếu chưa có document trong collection users thì thêm mới!
                 firebase.firestore().collection('users').where('uid', '==', model.currentUser.uid).limit(1).get().then(
                     (querySnapshot) => {
+
                         if (querySnapshot.docs.length === 1) {
                             console.log("duong: user already exist in collection users!")
                             model.currentUser = utils.getDataFromDoc(querySnapshot.docs[0])     //gán model.currentUser vào record trong collection users 
                             console.log(model.currentUser)
+                            view.setActiveScreen('swipeScreen')
                         } else {
+                            
                             model.createUserProfile(model.currentUser)
                             view.setActiveScreen('changeProfileSettingScreen') //log in lần đầu thì chuyển đến sửa profile ngay
                         }
@@ -68,7 +72,10 @@ model.loadConversations = () => {
                 model.currentConversation = data[0]
                 model.currentChatFriend = model.currentConversation.users
                     .filter(item => item !== model.currentUser.email)[0]
-                // view.showCurrentConversation()
+                if(view.state==='chat'){
+                    view.showCurrentConversation()
+                }
+                    
             }
 
             view.showConversation()
@@ -252,8 +259,10 @@ model.loadMatches = () => {
         .then(res => {
             console.log("ggggg")
             const data = utils.getDataFromDocs(res.docs)
+            
             model.matches = data
             // model.currentMatch = data[0]
+            
             view.showMatches()
         })
 
