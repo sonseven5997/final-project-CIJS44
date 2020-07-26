@@ -262,8 +262,10 @@ model.loadMatches = () => {
             
             model.matches = data
             // model.currentMatch = data[0]
+            if (view.state !=='profile'){
+                view.showMatches()
+            }
             
-            view.showMatches()
         })
 
     }
@@ -282,11 +284,14 @@ model.changeCurrentMatch = (match) => {
 
 
 model.listenUserChange = () => {
-
+    let isFirstRun = false
     firebase.firestore().collection('users')
         .where('uid', '==', model.currentUser.uid)
         .onSnapshot((res) => {
-
+            if (!isFirstRun) {
+                isFirstRun = true
+                return
+            }
             // console.log(res)
             const docChanges = res.docChanges()
             console.log(docChanges)
@@ -299,8 +304,15 @@ model.listenUserChange = () => {
                 if (type === 'modified') {
                     console.log(oneChangeData)
 
-                    model.currentUser = oneChangeData
-                    view.showCurrentUserProfile()
+                    
+                    
+                    if (view.state==='profile'){
+                        model.currentUser = oneChangeData
+                        view.showCurrentUserProfile()
+                    } else if (model.currentUser.matchedId.length !== oneChangeData.matchedId.length){
+                        model.loadMatches()
+                    }
+                    
 
                 }
 

@@ -120,7 +120,9 @@ view.setActiveScreen = (screenName) => {
                 })
             console.log(model.currentUser)
             model.loadConversations()
+            // view.showConversation()
             model.loadMatches()
+            // view.showMatches()
             model.listenConversationChange()
             model.listenUserChange()
 
