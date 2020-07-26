@@ -1,0 +1,62 @@
+.match-container {
+    display: flex;
+    height: 100%;
+}
+
+.content {
+    height: calc(100vh-64px);
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    border-left: solid 1px #dbdbdb;
+}
+
+.aside-left {
+    height: 64px;
+    border-right: 1px solid #dbdbdb;
+    line-height: 64px;
+    text-align: center;
+}
+
+.match-option{
+    width: 380px;
+    height: 480px;
+    border: 1px solid #dbdbdb;
+    border-radius: 10px;
+    /* background-image: url(../images/download.jpg); */
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: #FFF
+
+}
+
+.info {
+    padding: 20px;
+}
+
+.match-option .name-age-wrapper {
+    display: flex;
+}
+
+.name {
+    font-size: 30px;
+    padding-right: 10px;
+}
+
+.age {
+    font-size: 25px;
+    line-height: 45px;
+}
+
+
+
+
+.main {
+    display: flex;
+    justify-content: center;
+}
+
